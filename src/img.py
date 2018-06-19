@@ -62,20 +62,6 @@ def split_letters(image, num_letters=6, debug=False):
     for [x_min, y_min], [x_max, y_max] in letter_boxs:
         letter = resize(image[y_min:y_max, x_min:x_max], LETTER_SIZE)
         letter = img_as_ubyte(letter < 0.6)
-        # letter = binary[y_min:y_max, x_min:x_max]
-        # # pad white to fit train size
-        # pad_w = LETTER_SIZE - (x_max - x_min)
-        # pad_h = LETTER_SIZE - (y_max - y_min)
-        # if pad_w < 0 or pad_h < 0:
-        #     print('ERROR: letters size is too big', pad_w, pad_h)
-        #     return None
-        #
-        # left = int(floor(pad_w / 2))
-        # right = pad_w - left
-        # up = int(floor(pad_h / 2))
-        # down = pad_h - up
-        # letter = pad(letter, ((up, down), (left, right)), 'constant', constant_values=1)
-
         letters.append(letter)
 
     return letters

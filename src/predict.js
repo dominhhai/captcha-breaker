@@ -1,6 +1,6 @@
 const PythonShell = require('python-shell')
 
-const PY_SCRIPT = 'predict.py'
+const PY_SCRIPT = 'src/predict.py'
 
 module.exports = image_path => (new Promise((resolve, reject) => {
   let opts = { }
