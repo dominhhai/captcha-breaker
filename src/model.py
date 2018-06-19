@@ -1,6 +1,8 @@
 from __future__ import print_function, absolute_import, division
 import tensorflow as tf
 
+MODEL_LOG_DIR = 'checkpoint'
+
 def cnn_model_fn(features, labels, mode):
   """Model function for CNN."""
   # Input Layer
@@ -63,3 +65,8 @@ def cnn_model_fn(features, labels, mode):
           labels=labels, predictions=predictions['classes'])}
   return tf.estimator.EstimatorSpec(
       mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
+
+captcha_classifier = tf.estimator.Estimator(
+    model_fn=cnn_model_fn,
+    model_dir=MODEL_LOG_DIR
+)

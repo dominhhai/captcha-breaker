@@ -2,7 +2,7 @@ from __future__ import print_function, absolute_import, division
 import argparse
 import numpy as np
 import tensorflow as tf
-from model import cnn_model_fn
+from model import captcha_classifier
 
 MODEL_LOG_DIR = 'checkpoint'
 
@@ -24,12 +24,6 @@ def main(argv):
     x_test = x_test.astype('float32') / 255
     y_train = np.asarray(y_train, dtype=np.int32)
     y_test = np.asarray(y_test, dtype=np.int32)
-
-    # construct model
-    captcha_classifier = tf.estimator.Estimator(
-        model_fn=cnn_model_fn,
-        model_dir=MODEL_LOG_DIR
-    )
 
     # Set up logging for predictions
     tensors_to_log = {'probabilities': 'softmax_tensor'}

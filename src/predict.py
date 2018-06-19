@@ -4,7 +4,7 @@ import argparse
 from skimage import io
 import tensorflow as tf
 from img import split_letters
-from model import cnn_model_fn
+from model import captcha_classifier
 
 # disable all warnings
 import warnings
@@ -12,8 +12,6 @@ warnings.filterwarnings('ignore')
 # disable tf runtime message
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-MODEL_LOG_DIR = 'checkpoint'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--fname', default='data/test.jpg',  help='captcha image path')
@@ -29,18 +27,10 @@ def main(argv):
     image = io.imread(args.fname)
 
     # split into letters
-    # print('split image')
     letters = split_letters(image)
     if letters == None:
         print('Letters is not valid')
         return None
-
-    # load captcha classifier
-    print('load captcha classifier')
-    classifier = tf.estimator.Estimator(
-        model_fn=cnn_model_fn,
-        model_dir=MODEL_LOG_DIR
-    )
 
     # predict
     content = ''
@@ -52,7 +42,7 @@ def main(argv):
             y=None,
             num_epochs=1,
             shuffle=False)
-        predictions = classifier.predict(input_fn=predict_input_fn)
+        predictions = captcha_classifier.predict(input_fn=predict_input_fn)
         for pred_dict in predictions:
             class_id = pred_dict['classes']
             prob = pred_dict['probabilities'][class_id]
