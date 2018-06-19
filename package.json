@@ -1,0 +1,23 @@
+{
+  "name": "captcha-breaker",
+  "version": "1.0.0",
+  "description": "Breaking Captcha with Tensorflow",
+  "main": "src/predict.js",
+  "dependencies": {
+    "python-shell": "^0.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominhhai/captcha-breaker.git"
+  },
+  "author": "Do Minh Hai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dominhhai/captcha-breaker/issues"
+  },
+  "homepage": "https://github.com/dominhhai/captcha-breaker#README"
+}
