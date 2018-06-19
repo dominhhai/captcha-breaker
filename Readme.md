@@ -1,5 +1,5 @@
 # Captcha Breaker
-Build with Tensorflow (ConvNets) and  Node.js. Perfect test (100%) on Amazon Captcha :muscle::muscle::muscle:
+Build with Tensorflow (ConvNets) and  Node.js :muscle::muscle::muscle:
 
 # Installation
 #### Python packages
@@ -15,7 +15,7 @@ $ npm i
 # Usage
 ## 1. Create train data
 #### Prepare your training dataset
-* Copy captcha image to `data/captcha` folder
+* Copy captcha images to `data/captcha` folder
 ```
 |_data
       |_captcha
@@ -76,7 +76,7 @@ const captchaPredict = require('src/predict')
 
 captchaPredict(YOUR_IMAGE_PATH_or_URL)
   .then(console.log)
-  .catche(console.error)
+  .catch(console.error)
 ```
 Sample output:
 ```
