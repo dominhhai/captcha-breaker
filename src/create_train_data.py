@@ -27,7 +27,7 @@ for fname, contents in image_contents.iteritems():
     image = io.imread(os.path.join(DATA_FULL_DIR, fname))
 
     # split image
-    letters = split_letters(image, debug=True)
+    letters = split_letters(image, num_letters=len(contents), debug=True)
     if letters != None:
         fname = fname.replace('.jpg', '.png')
         for i, letter in enumerate(letters):
