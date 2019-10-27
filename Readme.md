@@ -23,16 +23,12 @@ $ npm i
 ```
 |_data
       |_captcha
-          |_ captcha_1.jpg
-          |_ captcha_2.jpg
+          |_ xss7.jpg
+          |_ tvu4.jpg
 ```
-* Create mapping file `data/captcha.json` to map your train image with corresponding label
-```json
-{
-    "captcha_1.jpg": "HEYMEN",
-    "captcha_2.jpg": "XINCHA"
-}
-```
+**IMPORTANT:** Note each image file is named with it's own solution.
+
+That means that if an image is named `A1bD3.jpg`, it corresponds to a captcha's whose solution is `A1bD3`  
 
 #### Build train data for model
 Run `src/create_train_data.py` will save your train data as `data/captcha.npz` compressed file.
