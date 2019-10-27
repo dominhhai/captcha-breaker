@@ -2,6 +2,7 @@ from __future__ import print_function, absolute_import, division
 import os
 import json
 from skimage import io
+from skimage.color import rgb2gray
 from img import split_letters
 import numpy as np
 
@@ -24,10 +25,11 @@ counter = 0
 for fname, contents in image_contents.iteritems():
     counter += 1
     print(counter, fname, contents)
-    image = io.imread(os.path.join(DATA_FULL_DIR, fname))
+    original_image = io.imread(os.path.join(DATA_FULL_DIR, fname))
+    grayscale_image = rgb2gray(original_image)
 
     # split image
-    letters = split_letters(image, debug=True)
+    letters = split_letters(grayscale_image, debug=True)
     if letters != None:
         fname = fname.replace('.jpg', '.png')
         for i, letter in enumerate(letters):
