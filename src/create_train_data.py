@@ -6,8 +6,18 @@ from skimage.color import rgb2gray
 from img import split_letters
 import numpy as np
 
+
+# Helper methods
+def strip_extension(filename):
+    return filename[:filename.rindex('.')]
+
+
+def build_data_map(data_path):
+    files = os.listdir(data_path)
+    return {x: strip_extension(x) for x in files}
+
+
 DATA_DIR = 'data'
-DATA_MAP = os.path.join(DATA_DIR, 'captcha.json')
 DATA_FULL_DIR = os.path.join(DATA_DIR, 'captcha')
 DATA_TRAIN_DIR = os.path.join(DATA_DIR, 'train')
 DATA_TRAIN_FILE = os.path.join(DATA_DIR, 'captcha')
@@ -16,12 +26,12 @@ DATA_TRAIN_FILE = os.path.join(DATA_DIR, 'captcha')
 data_x = []
 data_y = []
 
-# load image content json file
-with open(DATA_MAP) as f:
-    image_contents = json.load(f)
+# build image contents map
+image_contents = build_data_map(DATA_FULL_DIR)
 
 # load image and save letters
 counter = 0
+
 for fname, contents in image_contents.iteritems():
     counter += 1
     print(counter, fname, contents)
@@ -41,8 +51,7 @@ for fname, contents in image_contents.iteritems():
             fpath = os.path.join(DATA_TRAIN_DIR, content)
             if not os.path.exists(fpath):
                 os.makedirs(fpath)
-            fname_no_ext = fname[:fname.rindex('.')]
-            letter_fname = os.path.join(fpath, str(i+1) + '-' + fname_no_ext + '.png')
+            letter_fname = os.path.join(fpath, str(i+1) + '-' + strip_extension(fname) + '.png')
             io.imsave(letter_fname, 255 - letter) # invert black <> white color
     else:
         print('Letters is not valid')
