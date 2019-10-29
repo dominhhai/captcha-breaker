@@ -2,11 +2,22 @@ from __future__ import print_function, absolute_import, division
 import os
 import json
 from skimage import io
+from skimage.color import rgb2gray
 from img import split_letters
 import numpy as np
 
+
+# Helper methods
+def strip_extension(filename):
+    return filename[:filename.rindex('.')]
+
+
+def build_data_map(data_path):
+    files = os.listdir(data_path)
+    return {x: strip_extension(x) for x in files}
+
+
 DATA_DIR = 'data'
-DATA_MAP = os.path.join(DATA_DIR, 'captcha.json')
 DATA_FULL_DIR = os.path.join(DATA_DIR, 'captcha')
 DATA_TRAIN_DIR = os.path.join(DATA_DIR, 'train')
 DATA_TRAIN_FILE = os.path.join(DATA_DIR, 'captcha')
@@ -15,21 +26,21 @@ DATA_TRAIN_FILE = os.path.join(DATA_DIR, 'captcha')
 data_x = []
 data_y = []
 
-# load image content json file
-with open(DATA_MAP) as f:
-    image_contents = json.load(f)
+# build image contents map
+image_contents = build_data_map(DATA_FULL_DIR)
 
 # load image and save letters
 counter = 0
+
 for fname, contents in image_contents.iteritems():
     counter += 1
     print(counter, fname, contents)
-    image = io.imread(os.path.join(DATA_FULL_DIR, fname))
+    original_image = io.imread(os.path.join(DATA_FULL_DIR, fname))
+    grayscale_image = rgb2gray(original_image)
 
     # split image
-    letters = split_letters(image, num_letters=len(contents), debug=True)
+    letters = split_letters(grayscale_image, num_letters=len(contents), debug=True)
     if letters != None:
-        fname = fname.replace('.jpg', '.png')
         for i, letter in enumerate(letters):
             content = contents[i]
             # add to dataset
@@ -40,7 +51,7 @@ for fname, contents in image_contents.iteritems():
             fpath = os.path.join(DATA_TRAIN_DIR, content)
             if not os.path.exists(fpath):
                 os.makedirs(fpath)
-            letter_fname = os.path.join(fpath, str(i+1) + '-' + fname)
+            letter_fname = os.path.join(fpath, str(i+1) + '-' + strip_extension(fname) + '.png')
             io.imsave(letter_fname, 255 - letter) # invert black <> white color
     else:
         print('Letters is not valid')
