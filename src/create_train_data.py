@@ -31,7 +31,6 @@ for fname, contents in image_contents.iteritems():
     # split image
     letters = split_letters(grayscale_image, debug=True)
     if letters != None:
-        fname = fname.replace('.jpg', '.png')
         for i, letter in enumerate(letters):
             content = contents[i]
             # add to dataset
@@ -42,7 +41,8 @@ for fname, contents in image_contents.iteritems():
             fpath = os.path.join(DATA_TRAIN_DIR, content)
             if not os.path.exists(fpath):
                 os.makedirs(fpath)
-            letter_fname = os.path.join(fpath, str(i+1) + '-' + fname)
+            fname_no_ext = fname[:fname.rindex('.')]
+            letter_fname = os.path.join(fpath, str(i+1) + '-' + fname_no_ext + '.png')
             io.imsave(letter_fname, 255 - letter) # invert black <> white color
     else:
         print('Letters is not valid')
