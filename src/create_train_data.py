@@ -39,7 +39,7 @@ for fname, contents in image_contents.iteritems():
     grayscale_image = rgb2gray(original_image)
 
     # split image
-    letters = split_letters(grayscale_image, debug=True)
+    letters = split_letters(grayscale_image, num_letters=len(contents), debug=True)
     if letters != None:
         for i, letter in enumerate(letters):
             content = contents[i]
