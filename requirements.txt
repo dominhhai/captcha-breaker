@@ -12,7 +12,7 @@ funcsigs==1.0.2
 futures==3.2.0
 gast==0.2.0
 grpcio==1.12.1
-html5lib==0.9999999
+html5lib==0.99999999
 kiwisolver==1.0.1
 Markdown==2.6.11
 matplotlib==2.2.2
